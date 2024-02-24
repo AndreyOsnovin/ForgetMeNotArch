@@ -11,7 +11,17 @@ This is a personal guide for Arch Linux, created as a reminder of the key steps 
 sudo pacman -S reflector
 sudo reflector --verbose --latest 5 --sort rate --save /etc/pacman.d/mirrorlist
 ```
-   
+
+**Clearing Pacman Cache with paccache**
+
+Before using the `paccache` command, you need to ensure that the `pacman-contrib` package is installed, which includes `paccache` among other utilities. To install it, use the following command:
+
+```
+sudo pacman -S pacman-contrib
+```
+
+After installing `pacman-contrib`, you can use the `paccache -rk1` command to remove all old cached versions of packages, keeping only the latest version of each. When updating the system or installing packages, `pacman` automatically saves the downloaded packages in a cache. This allows for the restoration of a previous package version if necessary, but over time can significantly increase disk space usage. Using `paccache -rk1` helps free up disk space by deleting old package versions that are no longer needed.
+
 **Adjusting CPU Performance**
 
 - `cpufrequtils` or `cpupower`: These utilities allow you to manage CPU frequency scaling policies, which can impact power consumption.
@@ -54,7 +64,7 @@ sudo pacman -S libva-mesa-driver libva-utils mesa-vdpau lib32-mesa-vdpau lib32-l
 lspci -k | grep -EA3 'VGA|3D|Display'
 ```
 Ensure the `amdgpu` driver is being used.
-   
+
 **Enabling and Starting the Bluetooth Service**
 
 Enable and start the systemd service `bluetooth.service` to have Bluetooth operational at every system boot:
